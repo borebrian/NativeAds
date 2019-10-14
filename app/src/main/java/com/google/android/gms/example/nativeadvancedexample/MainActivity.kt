@@ -26,6 +26,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.google.android.gms.ads.formats.UnifiedNativeAdView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
+import kotlin.concurrent.fixedRateTimer
 
 const val ADMOB_AD_UNIT_ID = "ca-app-pub-3940256099942544/2247696110"
 const val ADMOB_APP_ID = "ca-app-pub-3940256099942544~3347511713"
@@ -40,6 +41,13 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
+        fixedRateTimer("timer",false,0,1000){
+            this@MainActivity.runOnUiThread {
+                Toast.makeText(this@MainActivity, "text", Toast.LENGTH_SHORT).show()
+            }
+        }
 
         // Initialize the Mobile Ads SDK.
         MobileAds.initialize(this, ADMOB_APP_ID)
